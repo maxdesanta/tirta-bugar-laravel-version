@@ -1,0 +1,67 @@
+.packet-table tbody td, .packet-table thead td {
+    text-align: center;
+}
+
+/* Gaya untuk tabel */
+.packet-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.packet-table tbody td {
+    padding: 10px;
+}
+
+/* Tombol Tambah Paket */
+.button {
+    background-color: var(--acent-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Container tombol Tambah Paket */
+.tambah-container {
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+/* Tombol Hapus */
+.btn-hapus {
+    background-color: var(--acent2-color); 
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Tombol Edit */
+.btn-edit {
+    background-color: var(--acent-color); 
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}

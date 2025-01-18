@@ -1,0 +1,547 @@
+/* css reset */
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* variabel warna */
+:root{
+    --primary-color: #1F1F1F;
+    --secondary-color: #FFFFFF;
+    --acent-color: #DFA100;
+}
+
+/* global style */
+body {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container {
+    display: flex;
+}
+
+input, select {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+header, .gallery{
+    padding: 10px 20px;
+}
+
+main {
+    margin-top: 78px;
+}
+
+.about, .why-choose-us {
+    padding: 15rem;
+    text-align: center;
+}
+
+.about-title, .why-title, .gallery-title, .price-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Montserrat", system-ui;
+}
+
+/* header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: var(--primary-color);
+}
+
+header .red {
+    color: var(--acent-color);
+}
+
+header .container {
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo-brand {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: "Playfair Display", system-ui;
+}
+
+/* Atur ulang tampilan menu untuk layar kecil */
+header .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+header .hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    transition: all 0.3s;
+}
+
+/* Menu Hamburger aktif */
+.menu-active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    padding: 20px;
+}
+
+.menu-active li {
+    margin-bottom: 10px;
+}
+
+header nav.container {
+    column-gap: 50px;
+}
+
+header .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+header .hamburger span {
+    width: 25px;
+    height: 10px;
+    background-color: white;
+    margin: 2px 0;
+    transition: 0.3s;
+}
+
+header nav .btn-daftar {
+    border: 1px solid var(--secondary-color);
+    font-size: 1.5rem;
+    padding: 10px 25px;
+    border-radius: 8px;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+}
+
+
+header nav a:hover .btn-daftar {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+header .menu.container {
+    column-gap: 20px;
+}
+
+header .menu li a {
+    font-family: "Montserrat", system-ui;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* banner */
+.banner {
+    background-image: url("https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    position: relative;
+}
+
+.banner .container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 64px;
+    background: rgba(233, 161, 0, 0.2);
+}
+
+/* about */
+.about .container {
+    flex-direction: column;
+}
+
+.about .about-title {
+    padding-bottom: 2rem;
+}
+
+.about p {
+    font-family: "Roboto", system-ui;
+}
+
+/* why choose us */
+.why-choose-us .why-title {
+    padding-bottom: 4rem;
+}
+
+.why-choose-us .container {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.why-choose-us .card-why {
+    width: 20%;
+    height: 100%;
+}
+
+.why-choose-us .card-why.container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.why-choose-us .card-why.containe .card-why-img {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.why-choose-us .card-why.containe .card-why-img img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.why-choose-us .card-why .why-card-title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: "Roboto", system-ui;
+    min-height: 2em;
+}
+
+/* gallery */
+.gallery .gallery-title {
+    padding-bottom: 4rem;
+}
+
+.gallery .container {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+
+.gallery .gallery-img {
+    flex: 0 1 calc(33% - 25px);
+    height: 300px;
+}
+
+.gallery .gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* price */
+.price {
+    text-align: center;
+    padding: 15rem 0;
+}
+.price .price-title {
+    padding-bottom: 4rem;
+}
+
+.price .container {
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.price .card-price {
+    border: 3px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 350px;
+    gap: 20px;
+}
+
+.price .card-price .container {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.price .card-price .price-card-title {
+    font-size: 1.6rem;
+    font-family: "Montserrat", system-ui;
+    font-weight: 600;  
+    justify-self: center;
+    padding: 38px;
+}
+
+.price .card-price .list-price-fasility {
+    text-align: left;
+}
+
+.price .card-price .list-price-fasility li {
+    margin-bottom: 15px;
+}
+
+.price .card-price .list-price-fasility li {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px;
+    font-family: "Roboto", system-ui;
+}
+
+.price .card-price .list-price-fasility li:before {
+    content: '✓';
+    color: var(--acent-color);
+    font-size: 20px;
+}
+
+.price .card-price .btn-buy {
+    border: none;
+    background-color: var(--acent-color);
+    width: 100%;
+    padding: 10px 25px;
+    border-radius: 8px;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* footer */
+footer {
+    padding: 10px 20px 0 20px;
+}
+
+footer .k.container {
+    justify-content: space-between;
+
+}
+
+footer .contact p {
+    width: 55%;
+    padding-bottom: 1rem;
+    font-family: "Roboto", system-ui;
+}
+
+footer .map .title-location {
+    text-align: right;
+}
+
+footer .contact .social-media .whatsapp-icon.container, footer .contact .social-media .instagram-icon.container {
+    align-items: center;
+    column-gap: 10px;
+}
+
+footer .social-media .whatsapp-icon img, footer .social-media .instagram-icon img{
+    width: 3%;
+}
+
+
+footer .contact .social-media .whatsapp-icon.container p, footer .contact .social-media .instagram-icon.container p {
+    font-family: "Roboto", system-ui;
+    margin-top: 12px;
+}
+
+.title-location, .title-contact {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Montserrat", system-ui;
+    padding-bottom: 2rem;
+}
+
+footer .copyright {
+    font-family: "Roboto", system-ui;
+    font-size: 14px;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Sidebar and Hamburger for Mobile */
+.menu-button {
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    z-index: 101;
+}
+
+/* Sidebar styling */
+.sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 250px;
+    background-color: var(--primary-color);
+    padding-top: 60px;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+    z-index: 100;
+}
+
+.sidebar.active {
+    display: flex;
+    transform: translateX(0);
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    padding: 15px 0;
+}
+
+.sidebar ul li a {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+@media (max-width: 720px) {
+    .hamburger {
+        display: flex;
+    }
+
+    nav {
+        position: relative;
+    }
+
+    .menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .btn-daftar {
+        margin-left: 1rem;
+    }
+    
+    .about, .why-choose-us, .price, .gallery {
+        padding: 2rem;
+    }
+    
+    /* banner */
+    .banner .container h1 {
+        font-size: 42px;
+    }
+
+    /* about */
+    .about p {
+        text-align: justify;
+    }
+
+    /* why choose ud */
+    .why-choose-us .container, .gallery .container {
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .why-choose-us .card-why{
+        margin-bottom: 50px;
+    }
+
+    /* gallery */
+    .gallery .gallery-title, .price .price-title {
+        padding-bottom: 2rem;
+    }
+
+    /* footer */
+
+    footer .kontak.container {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+
+    footer .map .title-location {
+        text-align: left;
+    }
+
+    footer .contact p {
+        width: 100%;
+    }
+
+    footer .social-media .whatsapp-icon img, footer .social-media .instagram-icon img{
+        width: 6%;
+    }
+
+    footer .contact .social-media .whatsapp-icon.container, footer .contact .social-media .instagram-icon.container {
+        column-gap: 12px;
+    }
+
+    footer .contact .social-media .whatsapp-icon.container, footer .contact .social-media .instagram-icon.container {
+        font-family: "Roboto", system-ui;
+        margin-top: -10px;
+    }
+    
+    footer .map {
+        aspec-ratio: 16/9;
+    }
+
+    footer .map iframe {
+        width: 100%;
+        height: 250px;
+        border: none;
+    }
+
+    .hideOnMobile, .btn-daftar {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+      }
+}
