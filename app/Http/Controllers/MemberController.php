@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Routing\Controller\Middleware;
+use App\Models\Member;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 // import model
-use App\Models\Member;
-use App\Models\ViewDetailMember;
 use App\Models\ViewMemberList;
+use App\Models\ViewDetailMember;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controller\Middleware;
 
 class MemberController extends Controller
 {
@@ -40,7 +41,7 @@ class MemberController extends Controller
             $members->orderBy('tanggal_berakhir', $sortDate);  
         }
 
-        $members = $members->get();
+        $members = $members->paginate(5);
 
         $jmlhMember = ViewMemberList::all()->count();
         $jmlhNonAktif = ViewMemberList::where('selisih', 0)->count();
@@ -50,7 +51,7 @@ class MemberController extends Controller
         return view('admin.index', compact('members', 'jmlhMember', 'jmlhNonAktif','jmlhMemberAktif', 'search'));
     }
 
-    public function showDetail($id): View{
+    public function showDetail($id){
         $detailMember = ViewDetailMember::where('id_member', $id)->first();
         return view('admin.detail-member', compact('detailMember'));
     }
@@ -69,11 +70,14 @@ class MemberController extends Controller
             'tanggal-akhir' => 'required|date',
         ]);
 
+        $randomPw = Str::random(8);
+        $password = base64_encode($randomPw);
+
         try {
             DB::statement('CALL tambah_member(?,?,?,?,?,?,?,?)', [
                 $validated['nama'],
                 $validated['email'],
-                '12345',
+                $password,
                 $validated['nomor-telepon'],
                 $validated['tanggal-awal'],
                 $validated['tanggal-akhir'],

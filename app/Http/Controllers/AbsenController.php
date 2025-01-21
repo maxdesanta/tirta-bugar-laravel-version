@@ -12,7 +12,7 @@ class AbsenController extends Controller
 
         $absen = ViewMemberAbsenList::when($search, function($query) use ($search){
             return $query->where('nama_member', 'ILIKE', '%' . $search . '%');
-        })->get();
+        })->paginate(5)->withQueryString();
 
         return view('admin.absen', compact('absen', 'search'));
     }

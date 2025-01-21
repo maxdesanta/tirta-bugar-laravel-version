@@ -6,6 +6,12 @@
     <title>Admin</title>
     <!-- link css -->
     <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin-tambah.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin-detail.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin-packet.css')}}"  rel="stylesheet">
+    <link href="{{asset('css/admin/tambah-paket.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin-transaksi.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin-absen.css')}}" rel="stylesheet">
     <!-- link favicon -->
     <!-- <link rel="shortcut icon" href="assets/logo-favicon.png" type="image/x-icon"> -->
     <!-- link google font -->
@@ -16,45 +22,42 @@
 
 <body>
     <div class="container">
+        @include('components.sidebar')
         <div class="content">
-            @include('components.sidebar')
-            <div>
-                <!-- header -->
-                <header>
-                    <div class="container">
-                        <div class="title-page">
-                            <h2>Beranda</h2>
-                        </div>
+            <!-- header -->
+            <header>
+                @if(request()->is('admin')) 
+                    <x-header titleHeader="Beranda" userName="Admin"></x-header>
+                @elseif(request()->is('admin/tambah-member')) 
+                    <x-header titleHeader="Tambah Member" userName="Admin"></x-header>
+                @elseif(isset($detailMember) && (request()->is('admin/member/' . $detailMember['id_member'] . '/edit'))) 
+                    <x-header titleHeader="Edit Member" userName="Admin"></x-header> 
+                @elseif(isset($detailMember) && (request()->is('admin/member/' . $detailMember['id_member']))) 
+                    <x-header titleHeader="Detail Member" userName="Admin"></x-header> 
+                @elseif(request()->is('admin/paket-member'))
+                    <x-header titleHeader="Daftar Paket" userName="Admin"></x-header>
+                @elseif(request()->is('admin/tambah-paket-member'))
+                    <x-header titleHeader="Tambah Paket" userName="Admin"></x-header>
+                @elseif(isset($detailPaket) && (request()->is('admin/paket-member/' . $detailPaket['id_paket'] . '/edit')))
+                    <x-header titleHeader="Edit Paket" userName="Admin"></x-header>
+                @elseif(request()->is('admin/transaksi/'))
+                    <x-header titleHeader="Transaksi" userName="Admin"></x-header>
+                @else
+                    <x-header titleHeader="Pengaturan Akun" userName="Admin"></x-header>
+                @endif
+            </header>
             
-                        <div class="account">
-                            <!-- notif account -->
-                            <div id="notification-container" class="notification-container">
-                                <div class="notification-icon-wrapper">
-                                    <img src="{{asset('assets/notification.svg')}}" alt="notification" id="notificationIcon">
-                                    <span class="notification-badge hidden"></span>
-                                </div>
-                            </div>
-                            <div class="account-profile">
-                                <!-- icon account -->
-                                <img src="{{asset('assets/profile.svg')}}" alt="profile">
-                                <h3>Admin</h3>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                
-                <!-- Pop-Up Notification -->
-                <div id="notification-popup" class="popup hidden">
-                    <div class="popup-content">
-                        <span id="close-popup" class="close">&times;</span>
-                        <ul id="notification-list"></ul>
-                    </div>
+            <!-- Pop-Up Notification -->
+            <div id="notification-popup" class="popup hidden">
+                <div class="popup-content">
+                    <span id="close-popup" class="close">&times;</span>
+                    <ul id="notification-list"></ul>
                 </div>
-            
-                <main>
-                    @yield('content')
-                </main>
             </div>
+        
+            <main>
+                @yield('content')
+            </main>
         </div>
     </div>
 </body>

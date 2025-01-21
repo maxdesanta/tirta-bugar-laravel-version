@@ -84,5 +84,9 @@
                 </tbody>
             </table>
         </section>
+        <!-- Pagination -->          
+        <section class="pagination">
+            {{ $members->links('vendor.pagination.tailwind') }}
+        </section>
     </div>
 @endsection
