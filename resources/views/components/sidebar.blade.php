@@ -79,8 +79,11 @@
         </nav>
     </div>
     <!-- sidebar log out -->
-    <a href="logout.php" class="log-out container">
-        <img src="{{asset('assets/log-out.svg')}}" alt="log-out">
-        <h3>Log Out</h3>
-    </a>
+    <form action="/logout" method="post">
+        @csrf
+        <button type="submit" name="submit" class="log-out container">
+            <img src="{{asset('assets/log-out.svg')}}" alt="log-out">
+            <h3 style="color: white;">Log Out</h3>
+        </button>
+    </form>
 </div>

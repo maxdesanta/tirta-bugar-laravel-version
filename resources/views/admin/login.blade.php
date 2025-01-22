@@ -19,7 +19,8 @@
 <body>
     <div class="container">
         <h2 class="login-title">Login</h2>
-        <form method="POST">
+        <form method="POST" action="/login/submit">
+            @csrf
             <div class="form-login container">
                 <div class="form-group container">
                     <label for="email">Email</label>
@@ -37,7 +38,7 @@
                     {{-- <div class="g-recaptcha" data-sitekey="6LfEookqAAAAABXcqRQj72oB7pPTR4JC121z5DmZ"></div>
                     <br/> --}}
                     <button type="submit" name="submit" class="btn-login">Login</button>
-                    <p>Don’t have account? <a class="auth-link" href="/admin/register">Register</a></p>
+                    <p>Don’t have account? <a class="auth-link" href="{{url('register')}}">Register</a></p>
                 </div>
             </div>
         </form>

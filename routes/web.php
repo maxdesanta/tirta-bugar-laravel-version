@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
@@ -13,28 +14,10 @@ Route::get('/', function () {
 
 // route admin
 Route::group([
+    'middleware' => ['auth'],
     'prefix' => 'admin',
-    'as' => 'admin'
+    'as' => 'admin.'
 ], function() {
-    // route admin login
-    Route::get('/login', function() {
-        return view('admin.login');
-    });
-
-    // route admin register
-    Route::get('/register', function() {
-        return view('admin.register');
-    });
-
-    // route admin forgot password
-    Route::get('/new-password', function() {
-        return view('admin.new-password');
-    });
-
-    // route admin new password
-    Route::get('/forgot-password', function() {
-        return view('admin.forgot-password');
-    });
 
     // route admin dashboard
     Route::get('/', [MemberController::class, 'index'])->name('admin.index');
@@ -84,29 +67,29 @@ Route::group([
 });
 
 
-// route member
-// Route::resource('/members', MemberController::class);
-
-/*
-Route::get('/members/{id}', [MemberController::class, 'showDetail']);
-
-Route::post('/members', [MemberController::class, 'add']);
-
-Route::put('/members/{id}', [MemberController::class, 'update']);
-
-Route::delete('/members/{id}', [MemberController::class, 'delete']);
-
-Route::get('/auth', function() {
-    return 'login dulu atuh';
+// route auth
+// route register admin
+Route::group([
+    'prefix' => 'register',
+    'as' => 'register.'
+],function () {
+    Route::get('/', [AdminController::class, 'register'])->name('admin.register');
+    Route::post('/submit', [AdminController::class, 'registerSubmit'])->name('admin.register.submit'); 
 });
 
-// route paket member
-Route::get('/paket-member', function () {
-    return 'ini halaman paket member';
+// route login admin
+Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/login/create', [AdminController::class, 'loginSubmit'])->name('admin.login.submit'); 
+
+// route logout
+Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+// route admin forgot password
+Route::get('/new-password', function() {
+    return view('admin.new-password');
 });
 
-Route::post('/paket-member', function () {
-    return request()->all();
+// route admin new password
+Route::get('/forgot-password', function() {
+    return view('admin.forgot-password');
 });
-
-*/

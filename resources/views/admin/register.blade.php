@@ -16,15 +16,22 @@
 <body>
     <div class="container">
         <h2 class="register-title">Register</h2>
-        <form method="POST">
+        <form method="POST" action="/register/submit">
+            @csrf
             <div class="container">
                 <div class="form-group container">
                     <label for="username">Username</label>
                     <input type="username" name="username" id="username">
+                    @error('username')
+                            <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group container">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email">
+                    @error('email')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group container">
                     <label for="password">Password</label>
@@ -32,10 +39,13 @@
                         <input type="password" name="password" id="password">
                         <img src="{{asset('assets/show-pw.svg')}}" alt="show-pw" onclick="showPassword()">
                     </div>
+                    @error('password')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="button-group">
                     <button type="submit" name="submit" class="btn-register">Register</button>
-                    <p class="text-login">Sudah Punya Akun? <a href="/admin/login">Login</a></p>
+                    <p class="text-login">Sudah Punya Akun? <a href="{{url('login')}}">Login</a></p>
                 </div>
             </div>
         </form>
