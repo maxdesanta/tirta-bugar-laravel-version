@@ -51,5 +51,15 @@
         </form>
     </div>
     <script src="{{asset('js/main.js')}}"></script>
+    <!-- Alert untuk Flash Message -->
+    <script>
+        @if (session('success'))
+            alert("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alert("{{ session('error') }}");
+        @endif
+    </script>
 </body>
 </html>

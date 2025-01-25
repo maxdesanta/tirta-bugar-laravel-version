@@ -86,11 +86,11 @@ input[type="password"], input[type="text"] {
 }
 
 .btn-group {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .btn-group.container {
-    justify0content: center;
+    justify-content: center;
     flex-direction: column;
 }
 

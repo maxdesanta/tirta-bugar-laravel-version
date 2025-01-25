@@ -4,11 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class checkAuth
+class VerifyEmail
 {
     /**
      * Handle an incoming request.
@@ -17,11 +16,12 @@ class checkAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check()) {
-            Log::warning('Pengguna belum login, diarahkan ke /login');
-            return redirect('/login');
-        }
+        $admin = Auth::guard('admin')->user();
 
+        if(!$admin || $admin->status_verify == 0) {
+            return redirect('/login')->with('error', 'Silakan verifikasi email Anda terlebih dahulu.');
+        }
+    
         return $next($request);
     }
 }

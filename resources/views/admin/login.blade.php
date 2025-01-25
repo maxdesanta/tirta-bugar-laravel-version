@@ -37,12 +37,31 @@
                 <div class="btn-group container">
                     {{-- <div class="g-recaptcha" data-sitekey="6LfEookqAAAAABXcqRQj72oB7pPTR4JC121z5DmZ"></div>
                     <br/> --}}
+                    <!-- reCAPTCHA -->
+                    <div style="margin-bottom: 20px;">
+                        {!! NoCaptcha::display() !!}
+                        @error('g-recaptcha-response')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <button type="submit" name="submit" class="btn-login">Login</button>
                     <p>Don’t have account? <a class="auth-link" href="{{url('register')}}">Register</a></p>
                 </div>
             </div>
         </form>
     </div>
+    <!-- Script untuk memuat reCAPTCHA -->
+    {!! NoCaptcha::renderJs() !!}
     <script src="{{asset('js/main.js')}}"></script>
+    <!-- Alert untuk Flash Message -->
+    <script>
+        @if (session('success'))
+            alert("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alert("{{ session('error') }}");
+        @endif
+    </script>
 </body>
 </html>

@@ -13,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         $middleware->alias([
-            'check'=>App\Http\Middleware\checkAuth::class
+            'check'=>App\Http\Middleware\checkAuth::class,
+            'verify'=>App\Http\Middleware\VerifyEmail::class
         ]);
 
         $middleware->validateCsrfTokens(except:[

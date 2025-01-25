@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Admin;
 use Illuminate\Support\Facades\App;
+
+// import controller
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AdminController;
@@ -14,7 +18,7 @@ Route::get('/', function () {
 
 // route admin
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['check', 'verify'],
     'prefix' => 'admin',
     'as' => 'admin.'
 ], function() {
@@ -61,9 +65,8 @@ Route::group([
     Route::get('/absen-harian', [AbsenController::class, 'index'])->name('admin.absen');
 
     // route pengaturan akun
-    Route::get('/setting', function() {
-        return view('admin.profile');
-    });
+    Route::get('/setting/{id}', [AdminController::class, 'showProfile'])->name('admin.profile');
+    Route::put('/setting/{id}', [AdminController::class, 'updateProfile'])->name('admin.update-profile');
 });
 
 
@@ -77,9 +80,20 @@ Route::group([
     Route::post('/submit', [AdminController::class, 'registerSubmit'])->name('admin.register.submit'); 
 });
 
+// route notification
+Route::get('/notif', [MemberController::class, 'getNotification'])->name('admin.notif');
+
+// verify register
+Route::get('/verify', [AdminController::class, 'verifyEmail'])->name('admin.verify'); 
+
 // route login admin
-Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/login/create', [AdminController::class, 'loginSubmit'])->name('admin.login.submit'); 
+Route::group([
+    'prefix' => 'login',
+    'as' => 'login.'
+],function () {
+    Route::get('/', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('/submit', [AdminController::class, 'loginSubmit'])->name('admin.login.submit'); 
+});
 
 // route logout
 Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');

@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/setting" class="menu-item {{ request()->is('admin/setting') ? 'container' : ''}}">
+                    <a href="/admin/setting/{{$admin->id_admin}}" class="menu-item {{ request()->is('admin/setting/' . $admin->id_admin) ? 'container' : ''}}">
                         <div class="menu container">
                             <img src="{{asset('assets/setting.svg')}}" alt="setting-nav">    
                             Pengaturan Akun

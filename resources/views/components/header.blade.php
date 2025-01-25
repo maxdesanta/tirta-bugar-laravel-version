@@ -1,3 +1,5 @@
+@props(['titleHeader', 'userName'])
+
 <div class="container">
     <div class="title-page">
         <h2>{{$titleHeader}}</h2>

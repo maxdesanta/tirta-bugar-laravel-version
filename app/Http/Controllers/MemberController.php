@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 // import model
 use App\Models\ViewMemberList;
 use App\Models\ViewDetailMember;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller\Middleware;
 
 class MemberController extends Controller
@@ -19,6 +21,7 @@ class MemberController extends Controller
         $filter = $request->input('combined_filter');
         $sortDate = $request->input('sort_by_date');
 
+        $admin = Auth::guard('admin')->user();
         $members = ViewMemberList::query();
 
         if($search) {
@@ -48,16 +51,37 @@ class MemberController extends Controller
         $jmlhMemberAktif = ViewMemberList::where('selisih', '>', 0)->count();
         
 
-        return view('admin.index', compact('members', 'jmlhMember', 'jmlhNonAktif','jmlhMemberAktif', 'search'));
+        return view('admin.index', compact('members', 'jmlhMember', 'jmlhNonAktif','jmlhMemberAktif', 'search', 'admin'));
+    }
+
+    public function getNotification() {
+        // Ambil data member yang masa berlakunya habis
+        $nonActiveMembers = ViewMemberList::where('selisih', 0)
+            ->orderBy('tanggal_berakhir', 'ASC')
+            ->limit(5)
+            ->get(['nama_member', 'format_tanggal_berakhir']);
+
+        // Strukturkan data notifikasi
+        $notificationsData = [
+            'hasNotifications' => $nonActiveMembers->isNotEmpty(),
+            'count' => $nonActiveMembers->count(),
+            'messages' => $nonActiveMembers->map(function ($member) {
+                return "{$member->nama_member} masa berlakunya sudah habis pada {$member->format_tanggal_berakhir}";
+            })
+        ];
+
+        return response()->json($notificationsData);
     }
 
     public function showDetail($id){
         $detailMember = ViewDetailMember::where('id_member', $id)->first();
-        return view('admin.detail-member', compact('detailMember'));
+        $admin = Auth::guard('admin')->user();
+        return view('admin.detail-member', compact('detailMember', 'admin'));
     }
 
     public function add(){
-        return view('admin.add-member');
+        $admin = Auth::guard('admin')->user();
+        return view('admin.add-member', compact('admin'));
     }
 
     public function create(Request $request){
@@ -72,6 +96,7 @@ class MemberController extends Controller
 
         $randomPw = Str::random(8);
         $password = base64_encode($randomPw);
+        $admin = Auth::guard('admin')->user();
 
         try {
             DB::statement('CALL tambah_member(?,?,?,?,?,?,?,?)', [
@@ -82,8 +107,7 @@ class MemberController extends Controller
                 $validated['tanggal-awal'],
                 $validated['tanggal-akhir'],
                 $validated['durasi'],
-                1
-                // auth()->user()->id,
+                $admin->id_admin
             ]);
 
             return redirect('/admin')->with('success', 'Member berhasil ditambahkan.');
@@ -94,8 +118,9 @@ class MemberController extends Controller
 
 
     public function update($id){
+        $admin = Auth::guard('admin')->user();
         $detailMember = Member::where('id_member', $id)->first();
-        return view('admin.edit-member', compact('detailMember'));
+        return view('admin.edit-member', compact('detailMember', 'admin'));
     }
 
     public function edit(Request $request){
@@ -109,6 +134,8 @@ class MemberController extends Controller
             'tanggal-akhir' => 'required|date',
         ]);
 
+        $admin = Auth::guard('admin')->user();
+
         try {
             // Cara 1: Menggunakan DB::statement
             DB::statement('CALL edit_member(?,?,?,?,?,?,?,?)', [
@@ -118,9 +145,8 @@ class MemberController extends Controller
                 $validated['nomor-telepon'],
                 $validated['tanggal-awal'],
                 $validated['tanggal-akhir'],
-                1,
+                $admin->id_admin,
                 $validated['durasi'],
-                // auth()->user()->id,
             ]);
 
             return redirect('/admin/member/' . $validated['id'])->with('success', 'Member berhasil diubah.');

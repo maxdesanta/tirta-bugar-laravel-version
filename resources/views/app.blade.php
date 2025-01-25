@@ -27,23 +27,23 @@
             <!-- header -->
             <header>
                 @if(request()->is('admin')) 
-                    <x-header titleHeader="Beranda" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Beranda" :userName="$admin->username"></x-header>
                 @elseif(request()->is('admin/tambah-member')) 
-                    <x-header titleHeader="Tambah Member" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Tambah Member" :userName="$admin->username" ></x-header>
                 @elseif(isset($detailMember) && (request()->is('admin/member/' . $detailMember['id_member'] . '/edit'))) 
-                    <x-header titleHeader="Edit Member" userName="{{Auth::user()->name}}"></x-header> 
+                    <x-header titleHeader="Edit Member" :userName="$admin->username"></x-header> 
                 @elseif(isset($detailMember) && (request()->is('admin/member/' . $detailMember['id_member']))) 
-                    <x-header titleHeader="Detail Member" userName="{{Auth::user()->name}}"></x-header> 
+                    <x-header titleHeader="Detail Member" :userName="$admin->username"></x-header> 
                 @elseif(request()->is('admin/paket-member'))
-                    <x-header titleHeader="Daftar Paket" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Daftar Paket" :userName="$admin->username"></x-header>
                 @elseif(request()->is('admin/tambah-paket-member'))
-                    <x-header titleHeader="Tambah Paket" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Tambah Paket" :userName="$admin->username"></x-header>
                 @elseif(isset($detailPaket) && (request()->is('admin/paket-member/' . $detailPaket['id_paket'] . '/edit')))
-                    <x-header titleHeader="Edit Paket" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Edit Paket" :userName="$admin->username"></x-header>
                 @elseif(request()->is('admin/transaksi/'))
-                    <x-header titleHeader="Transaksi" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Transaksi" :userName="$admin->username"></x-header>
                 @else
-                    <x-header titleHeader="Pengaturan Akun" userName="{{Auth::user()->name}}"></x-header>
+                    <x-header titleHeader="Pengaturan Akun" :userName="$admin->username"></x-header>
                 @endif
             </header>
             
@@ -60,5 +60,7 @@
             </main>
         </div>
     </div>
+    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/notification.js')}}"></script>
 </body>
 </html>
