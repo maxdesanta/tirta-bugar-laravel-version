@@ -16,7 +16,8 @@
 <body>
     <div class="forgot-layout container">
         <h2 class="forgot-title">Forgot Password</h2>
-        <form method="POST">
+        <form method="POST" action="/forgot-password/submit">
+            @csrf
             <div class="form-forgot container">
                 <div class="form-group container">
                     <label for="email">Masukkan Email anda :</label>
@@ -28,5 +29,15 @@
             </div>
         </form>
     </div>
+    <!-- Alert untuk Flash Message -->
+    <script>
+        @if (session('success'))
+            alert("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alert("{{ session('error') }}");
+        @endif
+    </script>
 </body>
 </html>

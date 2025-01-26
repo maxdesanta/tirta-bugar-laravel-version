@@ -32,7 +32,7 @@
                         <input type="password" name="password" id="password">
                         <img src="{{asset('assets/show-pw.svg')}}" alt="show-pw" onclick="showPassword()">
                     </div>
-                    <a class="auth-link" href="admin-forgot-password.php" target="_blank">Forgot Password</a>
+                    <a class="auth-link" href="{{url('forgot-password')}}" target="_blank">Forgot Password</a>
                 </div>
                 <div class="btn-group container">
                     {{-- <div class="g-recaptcha" data-sitekey="6LfEookqAAAAABXcqRQj72oB7pPTR4JC121z5DmZ"></div>

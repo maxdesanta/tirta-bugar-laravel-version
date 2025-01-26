@@ -94,7 +94,10 @@ class AdminController extends Controller
                 $verify_token,
             ]);
 
-            $this->sendEmail($validated['email'], $validated['username'], $verify_token);
+            $subject = 'Register Akun';
+            $body = "Akun anda sudah di registrasi, silahkan buka link <a href='" . url('/verify?token=' . $verify_token) . "'>di sini</a> untuk melakukan verifikasi";
+
+            $this->sendEmail($validated['email'], $validated['username'], $body, $subject);
 
             return redirect('/login')->with('success', 'Registrasi berhasil! Silakan cek email untuk melakukan verifikasi.');
 
@@ -103,24 +106,24 @@ class AdminController extends Controller
         }
     }
 
-    private function sendEmail($email, $userName, $token){
+    private function sendEmail($email, $userName, $body, $subject){
         $mail = new PHPMailer(true);
 
         try{
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = env('MAIL_HOST');
             $mail->SMTPAuth = true;
-            $mail->Username = 'l3782960@gmail.com';
-            $mail->Password = 'favxmitncpqpqyfc';
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+            $mail->Port = env('MAIL_PORT');
 
-            $mail->setFrom('tirtabugar@example.com', 'Tirta Bugar');
+            $mail->setFrom(env('MAIL_FROM_ADDRESS'), 'Tirta Bugar');
             $mail->addAddress($email, $userName);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Registrasi Akun';
-            $mail->Body = "Akun anda sudah di registrasi, silahkan buka link <a href='" . url('/verify?token=' . $token) . "'>di sini</a> untuk melakukan verifikasi";
+            $mail->Subject = $subject;
+            $mail->Body = $body;
 
             $mail->send();
         } catch (Exception $e) {
@@ -142,6 +145,63 @@ class AdminController extends Controller
         ]);
 
         return redirect('/login')->with('success', 'Verifikasi email berhasil.');
+    }
+
+    public function resetPassword(){
+        return view('admin.forgot-password');
+    }
+
+    public function sendEmailReset(Request $request){
+        $validated = $request->validate([
+            'email' => 'required|email|exists:admin,email',
+        ]);
+
+        $admin = Admin::where('email', $validated['email'])->first();
+
+        if (!$admin) {
+            return back()->with('error', 'Email yang anda masukkan tidak ditemukan.');
+        }
+
+        $token = bin2hex(random_bytes(16));
+        $token_hash = hash('sha256', $token);
+        $expire = now()->addMinutes(60);
+        $subject = 'Reset Password';
+        $body = "silahkan buka link <a href='" . url('/reset-password?token= ' . $token_hash) . "'>di sini</a> untuk mengganti password kamu. Terima kasih";
+
+
+        $admin->reset_token_hash = $token_hash;
+        $admin->reset_token_expires_at = $expire;
+        $admin->save();
+
+        $this->sendEmail($validated['email'], $admin->username, $body, $subject);
+
+        return redirect('/login')->with('success', 'Link reset password telah dikirim ke email Anda.');
+    }
+
+    public function newPassword(){
+        return view('admin.new-password');
+    }
+    public function resetPasswordSubmit(Request $request){
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+            'token' => 'required',
+        ]);
+
+        $hashedToken = hash('sha256', $request->token);
+    
+        $admin = Admin::where('reset_token_hash', $request->token)->where('reset_token_expires_at', '>', now())->first();
+    
+        if (!$admin) {
+            return back()->with('error', 'Token tidak valid atau sudah kedaluwarsa.');
+        }
+    
+        // Simpan password baru
+        $admin->password = Hash::make($request->password);
+        $admin->reset_token_hash = null;
+        $admin->reset_token_expires_at = null;
+        $admin->save();
+    
+        return redirect('/login')->with('success', 'Password berhasil diubah. Silakan login.');
     }
 
     public function logout(Request $request){

@@ -104,6 +104,10 @@ Route::get('/new-password', function() {
 });
 
 // route admin new password
-Route::get('/forgot-password', function() {
-    return view('admin.forgot-password');
-});
+Route::get('/forgot-password', [AdminController::class, 'resetPassword'])->name('admin.forgot-password');
+
+Route::post('/forgot-password/submit', [AdminController::class, 'sendEmailReset'])->name('admin.send-email-reset');
+
+Route::get('/reset-password', [AdminController::class, 'newPassword'])->name('admin.new-password');
+
+Route::post('/reset-password/submit', [AdminController::class, 'resetPasswordSubmit'])->name('admin.new-password');
