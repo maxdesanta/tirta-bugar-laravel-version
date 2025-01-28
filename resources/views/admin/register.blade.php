@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Admin - Register</title>
     <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
     <link href="{{asset('css/admin/admin-register.css')}}" rel="stylesheet">
     <!-- link favicon -->
-    <link rel="shortcut icon" href="assets/logo-favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('assets/logo-favicon.png')}}" type="image/x-icon">
     <!-- link google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Admin - Login</title>
     <!-- link css -->
     <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
     <link href="{{asset('css/admin/admin-login.css')}}" rel="stylesheet">
     <!-- link favicon -->
-    {{-- <link rel="shortcut icon" href="assets/logo-favicon.png" type="image/x-icon"> --}}
+    <link rel="shortcut icon" href="{{asset('assets/logo-favicon.png')}}" type="image/x-icon">
     <!-- link captcha -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- link google font -->

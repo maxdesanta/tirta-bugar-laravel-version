@@ -13,7 +13,7 @@
     <link href="{{asset('css/admin/admin-transaksi.css')}}" rel="stylesheet">
     <link href="{{asset('css/admin/admin-absen.css')}}" rel="stylesheet">
     <!-- link favicon -->
-    <!-- <link rel="shortcut icon" href="assets/logo-favicon.png" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="{{asset('assets/logo-favicon.png')}}" type="image/x-icon">
     <!-- link google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

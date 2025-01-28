@@ -45,6 +45,7 @@ class MemberController extends Controller
         }
 
         $members = $members->paginate(5);
+        $members->appends($request->all());
 
         $jmlhMember = ViewMemberList::all()->count();
         $jmlhNonAktif = ViewMemberList::where('selisih', 0)->count();

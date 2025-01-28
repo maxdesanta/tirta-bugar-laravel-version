@@ -62,7 +62,7 @@
                 <tbody>
                     {{-- data member --}}
                     @foreach ($members as $member)
-                        <tr>
+                        <tr class="{{ $member->selisih === 0 ? 'habis' : ($member->selisih <= 7 ? 'hampir-habis' : '') }}">
                             <td style="text-align: center;">{{$member->nama_member}}</td>
                             <td style="text-align: center;">{{$member->nomor_telepon}}</td>
                             <td style="text-align: center;">{{$member->keterangan_durasi}}</td>
